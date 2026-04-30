@@ -89,7 +89,7 @@ Node-RED rodando em AWS EC2:
 ## 👨‍💻 Autor
 
 Rozmani Cezar Viveiros  
-Pós-graduação em Internet das Coisas (IoT) – IFSP
+Pós-graduação em Internet das Coisas (IoT) – IFSP | Prof. Dr. Marcos Aparecido Chaves Ferreira 30/04/2026
 
 ---
 
