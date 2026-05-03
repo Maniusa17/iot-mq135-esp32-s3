@@ -1,0 +1,455 @@
+[
+    {
+        "id": "36273a49efaa1c78",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3f95b442e9532ddf",
+        "type": "mqtt in",
+        "z": "36273a49efaa1c78",
+        "name": "",
+        "topic": "sensor/gas",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "959f0b49d9b8b6c5",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 140,
+        "wires": [
+            [
+                "75cb80fc84cb59c1"
+            ]
+        ]
+    },
+    {
+        "id": "f00e835bad7a6eec",
+        "type": "ui-gauge",
+        "z": "36273a49efaa1c78",
+        "name": "CO2",
+        "group": "2a343668d2eba97c",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "gauge",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "units",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "3",
+                "color": "#cc00c5",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "10",
+                "color": "#11ee2a",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "22",
+                "color": "#fff700",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "25",
+                "color": "#ff0000",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "25",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 670,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39c0bc3219f97b28",
+        "type": "ui-chart",
+        "z": "36273a49efaa1c78",
+        "group": "2a343668d2eba97c",
+        "name": "Co2 Histórico",
+        "label": "chart",
+        "order": 9007199254740991,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "0",
+        "ymax": "25",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 520,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75cb80fc84cb59c1",
+        "type": "function",
+        "z": "36273a49efaa1c78",
+        "name": "function 1",
+        "func": "let valor = Number(msg.payload);\n\nlet msgGrafico = {\n    payload: valor,\n    topic: \"CO2\"\n};\n\nlet msgBanco = {\n    topic: \"INSERT INTO iot.sensores (valor) VALUES (\" + valor + \")\"\n};\n\nreturn [msgGrafico, msgBanco];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "f00e835bad7a6eec",
+                "39c0bc3219f97b28"
+            ],
+            [
+                "786c6af84f92556d"
+            ]
+        ]
+    },
+    {
+        "id": "b5956f9ce51a04bd",
+        "type": "link call",
+        "z": "36273a49efaa1c78",
+        "name": "",
+        "links": [],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 2260,
+        "y": 5780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fad6f5c7bc89412b",
+        "type": "inject",
+        "z": "36273a49efaa1c78",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "controle/led",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "2801d360168295b8"
+            ]
+        ]
+    },
+    {
+        "id": "484060ccf0377ba5",
+        "type": "inject",
+        "z": "36273a49efaa1c78",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "controle/led",
+        "payload": "OFF",
+        "payloadType": "str",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "2801d360168295b8"
+            ]
+        ]
+    },
+    {
+        "id": "2801d360168295b8",
+        "type": "mqtt out",
+        "z": "36273a49efaa1c78",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "959f0b49d9b8b6c5",
+        "x": 350,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "a792a110053ed68f",
+        "type": "mqtt in",
+        "z": "36273a49efaa1c78",
+        "name": "",
+        "topic": "sensor/botao",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "959f0b49d9b8b6c5",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 400,
+        "wires": [
+            [
+                "de9fe4cb40ecb8a3"
+            ]
+        ]
+    },
+    {
+        "id": "de9fe4cb40ecb8a3",
+        "type": "debug",
+        "z": "36273a49efaa1c78",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "786c6af84f92556d",
+        "type": "mysql",
+        "z": "36273a49efaa1c78",
+        "mydb": "f430a39805db1309",
+        "name": "iotuser",
+        "x": 710,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "959f0b49d9b8b6c5",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ec2-13-233-174-162.ap-south-1.compute.amazonaws.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "2a343668d2eba97c",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "e7b38051323424c5",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "f430a39805db1309",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "iot",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "e7b38051323424c5",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "926f3eb271a5042a",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "793c7845fbc5b38a",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "926f3eb271a5042a",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "793c7845fbc5b38a",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "6879b9238a82bd2c",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-node-mysql": "3.0.0"
+        }
+    }
+]
