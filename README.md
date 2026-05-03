@@ -1,98 +1,129 @@
-# 🌐 Projeto IoT com ESP32-S3 + MQ135 + Node-RED
+# 🌐 Sistema IoT para Monitoramento de Qualidade do Ar
+
+### ESP32-S3 + MQ135 + MQTT + Node-RED + AWS
+
+---
 
 ## 📌 Descrição
 
-Este projeto implementa um sistema IoT completo utilizando o ESP32-S3 para monitoramento de qualidade do ar através do sensor MQ135, com comunicação via MQTT e visualização em Node-RED.
+Este projeto implementa um sistema IoT completo utilizando o **ESP32-S3** para monitoramento da qualidade do ar através do sensor **MQ135**, com comunicação via **MQTT** e visualização em **Node-RED** hospedado na **AWS EC2**.
 
-O sistema permite:
-
-- Monitoramento em tempo real de gases (MQ135)
-- Exibição local em display OLED
-- Envio de dados para servidor MQTT (AWS EC2)
-- Controle remoto de LED
-- Interação via botão físico
-- Dashboard com histórico e visualização
-
----
-
-## 🧠 Arquitetura do Sistema
-
----
-
-## ⚙️ Tecnologias Utilizadas
-
-- ESP32-S3
-- Sensor MQ135
-- Display OLED I2C
-- Protocolo MQTT
-- Node-RED
-- AWS EC2
-- Arduino IDE
-
----
-
-## 🔌 Hardware
-
-- ESP32-S3 Dev Module
-- Sensor MQ135
-- Display OLED SSD1306 (I2C)
-- LED + resistor
-- Botão com pull-up interno
-
----
-
-## 📡 Tópicos MQTT
-
-| Função        | Tópico            |
-|--------------|------------------|
-| Sensor gás   | `sensor/gas`     |
-| Botão        | `sensor/botao`   |
-| Controle LED | `controle/led`   |
-
----
-
-## 🌍 Servidor
-
-Node-RED rodando em AWS EC2:
-
-🔗 http://13.233.174.162:1880/dashboard
+O sistema realiza a coleta, transmissão, processamento e exibição dos dados em tempo real.
 
 ---
 
 ## 📊 Funcionalidades
 
-- Leitura do sensor MQ135
-- Envio contínuo via MQTT
-- Dashboard com gráfico histórico
-- Botão físico envia evento MQTT
-- Controle remoto do LED via Node-RED
-- Exibição de status no display OLED
+* Monitoramento em tempo real de gases (MQ135)
+* Exibição local em display OLED (I2C)
+* Envio contínuo de dados via MQTT
+* Dashboard com gráfico histórico
+* Controle remoto de LED
+* Interação via botão físico
+* Integração com servidor em nuvem (AWS EC2)
 
 ---
 
-## 🧪 Testes
+## 🧠 Arquitetura do Sistema
 
-- WiFi conectado com sucesso
-- MQTT conectado
-- Sensor enviando dados
-- Botão detectado corretamente
-- LED respondendo a comandos remotos
+ESP32 → MQTT → Node-RED → Dashboard
+                ↓
+           Banco de dados (histórico)
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+* ESP32-S3
+* Sensor MQ135
+* Display OLED SSD1306 (I2C)
+* MQTT (Mosquitto)
+* Node-RED
+* AWS EC2
+* Arduino IDE
+
+---
+
+## 🔌 Hardware
+
+* ESP32-S3 Dev Module
+* Sensor MQ135
+* Display OLED SSD1306
+* LED + resistor
+* Botão com pull-up interno
+
+---
+
+## 📡 Tópicos MQTT
+
+| Função          | Tópico       |
+| --------------- | ------------ |
+| Sensor de gás   | sensor/gas   |
+| Botão           | sensor/botao |
+| Controle de LED | controle/led |
+
+---
+
+## 🌍 Servidor
+
+Node-RED rodando em instância AWS EC2.
+
+> ⚠️ O acesso ao dashboard pode estar restrito para demonstração ou ambiente local.
+
+---
+
+## 🚀 Como Executar
+
+1. Suba o código no ESP32 via Arduino IDE
+2. Configure WiFi e IP do broker MQTT no código
+3. Inicie o servidor MQTT (Mosquitto) na EC2
+4. Execute o Node-RED
+5. Acesse o dashboard pelo navegador
 
 ---
 
 ## 📷 Imagens do Projeto
 
-*(adicione aqui depois)*
+### 📊 Dashboard
+
+![Dashboard](dashboard.jpg)
+
+### 🔧 Montagem (Protoboard)
+
+![Protoboard](protoboard_geral.jpeg)
+
+### ⚙️ Node-RED
+
+![Node-RED](Node-RED.jpg)
+
+### ☁️ AWS EC2
+
+![AWS](AWS_EC2_instancia.jpg)
+
+---
+
+## 🧪 Testes Realizados
+
+* WiFi conectado com sucesso
+* MQTT conectado
+* Sensor enviando dados corretamente
+* Botão detectado corretamente
+* LED respondendo a comandos remotos
+* Dashboard exibindo dados em tempo real
 
 ---
 
 ## 👨‍💻 Autor
 
-Rozmani Cezar Viveiros  
-Pós-graduação em Internet das Coisas (IoT) – IFSP | Prof. Dr. Marcos Aparecido Chaves Ferreira 30/04/2026
+**Rozmani Cezar Viveiros**
+Pós-graduação em Internet das Coisas (IoT) – IFSP
+Prof. Dr. Marcos Aparecido Chaves Ferreira
+📅 30/04/2026
 
 ---
 
 ## 📌 Observações
 
-O projeto demonstra um fluxo completo de IoT, desde aquisição de dados até visualização e atuação remota, utilizando arquitetura baseada em MQTT.
+Este projeto demonstra uma arquitetura completa de IoT, desde a aquisição de dados até a visualização e atuação remota, utilizando comunicação baseada em MQTT e processamento em nuvem.
+
+---
